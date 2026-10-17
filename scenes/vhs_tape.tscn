@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://ci1j2bmdpbjdg"]
+
+[ext_resource type="PackedScene" uid="uid://bx4hcrqx5v0gm" path="res://assets/models/vhs_tape.glb" id="1_r44yu"]
+[ext_resource type="Script" uid="uid://bx4d2ax08164i" path="res://src/vhs_tape.gd" id="2_274nt"]
+[ext_resource type="PackedScene" uid="uid://dpoy2uejpgimr" path="res://scenes/tape.tscn" id="3_rgn3i"]
+
+[node name="vhs_tape" unique_id=1728705840 instance=ExtResource("1_r44yu")]
+script = ExtResource("2_274nt")
+
+[node name="VHS_Tape_Top" parent="VHS_Tape" parent_id_path=PackedInt32Array(1405652224) index="0" unique_id=748308736]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, -0.70710677, 0, 0.70710677, 0.70710677, 0, 0.025003195, -0.038735043)
+
+[node name="tape" parent="." index="1" unique_id=1671299865 instance=ExtResource("3_rgn3i")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.21150434, 0.08753425, 0)

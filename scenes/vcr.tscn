@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://drcefgvike6hc"]
+
+[ext_resource type="PackedScene" uid="uid://chi1xodu36cr8" path="res://assets/models/vcr.glb" id="1_vtmig"]
+[ext_resource type="Script" uid="uid://drob1jeldyrnu" path="res://src/vcr.gd" id="2_qk6ud"]
+
+[node name="vcr" unique_id=1647886530 instance=ExtResource("1_vtmig")]
+script = ExtResource("2_qk6ud")

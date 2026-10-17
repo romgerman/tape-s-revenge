@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://imiwwbo7fpk7"]
+
+[ext_resource type="Script" uid="uid://bgdhi1k6m0uy0" path="res://src/main.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://648ejmwqpayn" path="res://scenes/player.tscn" id="1_ig7tw"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_mo3mp"]
+vertices = PackedVector3Array(-6.25, 0.25, -8.5, -5.75, 0.25, -8.5, -5.75, 0.25, -49.5, -49.5, 0.25, -49.5, -49.5, 0.25, -8.75, -4.5, 0.25, -7.25, -1, 0.25, -7.25, -1, 0.25, -8.25, -4.75, 0.25, -8.5, -0.5, 0.25, -8.5, -0.5, 0.25, -49.5, 1, 0.25, -8.5, 1.25, 0.25, -7.25, 2, 0.25, -7.25, 2.25, 0.25, -8.5, 3.75, 0.25, -49.5, 3.75, 0.25, -8.5, 4.25, 0.25, -8.25, 49.5, 0.25, -7.25, 49.5, 0.25, -49.5, 4.25, 0.25, -7.25, -6.75, 0.25, -0.25, -5.5, 0.25, -0.5, -5.5, 0.25, -1.75, -6.75, 0.25, -2, -49.5, 0.25, 2, -6.75, 0.25, -6.5, -6.75, 0.25, -8.25, -6.75, 0.25, -3.75, -5.5, 0.25, -4, -5.5, 0.25, -6.25, -6.25, 0.25, 1.75, -6.75, 0.25, 1.5, 2.25, 0.25, -6.25, 0.75, 0.25, -6.25, 4, 0.25, -6.25, -4.5, 0.25, -2, -4.5, 0.25, -0.25, -4.75, 0.25, -6.25, -4.5, 0.25, -3.75, -4.5, 0.25, 1.5, -5.5, 0.25, 1.75, -5.5, 0.25, 49.5, -0.75, 0.25, -6.25, 49.5, 0.25, 49.5, -49.5, 0.25, 49.5)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 4), PackedInt32Array(2, 4, 3), PackedInt32Array(7, 6, 5), PackedInt32Array(7, 5, 9), PackedInt32Array(9, 5, 8), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 2), PackedInt32Array(8, 1, 2), PackedInt32Array(12, 11, 13), PackedInt32Array(13, 11, 14), PackedInt32Array(14, 11, 10), PackedInt32Array(14, 10, 15), PackedInt32Array(11, 9, 10), PackedInt32Array(15, 16, 14), PackedInt32Array(16, 15, 17), PackedInt32Array(17, 15, 19), PackedInt32Array(17, 19, 18), PackedInt32Array(18, 20, 17), PackedInt32Array(22, 21, 23), PackedInt32Array(23, 21, 24), PackedInt32Array(24, 21, 25), PackedInt32Array(4, 27, 26), PackedInt32Array(29, 28, 30), PackedInt32Array(30, 28, 26), PackedInt32Array(26, 28, 4), PackedInt32Array(24, 25, 28), PackedInt32Array(28, 25, 4), PackedInt32Array(32, 31, 25), PackedInt32Array(4, 0, 27), PackedInt32Array(21, 32, 25), PackedInt32Array(13, 33, 12), PackedInt32Array(12, 33, 34), PackedInt32Array(35, 20, 18), PackedInt32Array(23, 36, 22), PackedInt32Array(22, 36, 37), PackedInt32Array(34, 33, 36), PackedInt32Array(36, 33, 37), PackedInt32Array(30, 38, 29), PackedInt32Array(29, 38, 39), PackedInt32Array(42, 41, 40), PackedInt32Array(38, 5, 39), PackedInt32Array(39, 5, 43), PackedInt32Array(43, 5, 6), PackedInt32Array(37, 33, 40), PackedInt32Array(40, 33, 35), PackedInt32Array(35, 18, 40), PackedInt32Array(40, 18, 42), PackedInt32Array(42, 18, 44), PackedInt32Array(43, 34, 39), PackedInt32Array(39, 34, 36), PackedInt32Array(31, 41, 25), PackedInt32Array(25, 41, 45), PackedInt32Array(45, 41, 42)]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mo3mp"]
+albedo_color = Color(0.427493, 0.42749307, 0.42749307, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qlg0r"]
+sky_top_color = Color(0.5801709, 0.09468927, 0.97069746, 1)
+sky_horizon_color = Color(1, 0.43446842, 0.6128459, 1)
+sky_curve = 0.21213087
+ground_bottom_color = Color(0.4508664, 0.19194904, 0.7117085, 1)
+ground_horizon_color = Color(0.99069494, 0.46183103, 0.5279283, 1)
+ground_curve = 0.030314352
+sun_curve = 1e-05
+
+[sub_resource type="Sky" id="Sky_dqkch"]
+sky_material = SubResource("ProceduralSkyMaterial_qlg0r")
+
+[sub_resource type="Environment" id="Environment_mo3mp"]
+background_mode = 2
+sky = SubResource("Sky_dqkch")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 1
+ssr_enabled = true
+ssao_enabled = true
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.8612565, 0.0012225211, 0.94754857, 1)
+fog_sky_affect = 0.05
+
+[node name="Main" type="Node3D" unique_id=216373764]
+script = ExtResource("1_0xm2m")
+
+[node name="Level" type="Node3D" parent="." unique_id=412805201]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Level" unique_id=1916063673]
+navigation_mesh = SubResource("NavigationMesh_mo3mp")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Level/NavigationRegion3D" unique_id=987733542]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(100, 0.5, 100)
+material = SubResource("StandardMaterial3D_mo3mp")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Level/NavigationRegion3D/CSGBox3D" unique_id=1232778740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.69151497, -7.5)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Level/NavigationRegion3D/CSGBox3D" unique_id=1837055739]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1654289, 0.69151497, -7.5)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Level/NavigationRegion3D/CSGBox3D" unique_id=106187453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6240587, 0.69151497, -7.5)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Level/NavigationRegion3D/CSGBox3D" unique_id=1498101810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6240587, 0.69151497, -2.9757566)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Level/NavigationRegion3D/CSGBox3D" unique_id=178869970]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6240587, 0.69151497, 0.5526378)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Level/NavigationRegion3D/CSGBox3D" unique_id=803671729]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6240587, 0.69151497, 0.5526378)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Level" unique_id=1266139456]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 1.5, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Level" unique_id=571175864]
+environment = SubResource("Environment_mo3mp")
+
+[node name="Player" parent="Level" unique_id=809582994 instance=ExtResource("1_ig7tw")]

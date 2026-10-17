@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://648ejmwqpayn"]
+
+[ext_resource type="Script" uid="uid://vb75t1so87if" path="res://src/player.gd" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://ewx30csfhi8l" path="res://src/camera_arm.gd" id="2_g2els"]
+[ext_resource type="PackedScene" uid="uid://ci1j2bmdpbjdg" path="res://scenes/vhs_tape.tscn" id="3_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://drcefgvike6hc" path="res://scenes/vcr.tscn" id="4_dqkch"]
+[ext_resource type="Script" uid="uid://do013jvdsxa70" path="res://src/fsm/fsm.gd" id="5_smehm"]
+[ext_resource type="Script" uid="uid://srnw8ybvrexf" path="res://src/fsm/player/idle.gd" id="6_ur7pv"]
+[ext_resource type="Script" uid="uid://b1wtv3jxxcgl" path="res://src/fsm/player/walk.gd" id="7_y4r1p"]
+[ext_resource type="Script" uid="uid://58acew36e4pl" path="res://src/fsm/player/sprint.gd" id="8_d2wvv"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mo3mp"]
+
+[sub_resource type="GDScript" id="GDScript_smehm"]
+script/source = "extends Label
+
+@export var fsm: FSM
+
+func _physics_process(delta: float) -> void:
+	text = fsm.get_current_state_name()
+"
+
+[node name="Player" type="CharacterBody3D" unique_id=809582994]
+script = ExtResource("1_3vyb7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=392908224]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_mo3mp")
+
+[node name="CameraPivot" type="Marker3D" parent="." unique_id=1681565713]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6486561, 0)
+
+[node name="CameraArm" type="Node3D" parent="CameraPivot" unique_id=1937206551 node_paths=PackedStringArray("fsm")]
+script = ExtResource("2_g2els")
+fsm = NodePath("../../FSM")
+min_x = -1.5533430342749532
+max_x = 1.5533430342749532
+bob_walk_amplitude = 0.2
+bob_sprint_amplitude = 0.2
+bob_walk_speed = 4.0
+bob_sprint_speed = 6.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/CameraArm" unique_id=1909401143]
+
+[node name="RightArmPivot" type="Node3D" parent="CameraPivot/CameraArm/Camera3D" unique_id=464188497]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26075834, -0.10745978, -0.34660208)
+
+[node name="vhs_tape" parent="CameraPivot/CameraArm/Camera3D/RightArmPivot" unique_id=1728705840 instance=ExtResource("3_qhqgy")]
+transform = Transform3D(-0.86602545, 0.46277216, -0.18931961, 0, -0.37863922, -0.9255443, -0.49999994, -0.8015448, 0.32791123, 0, 0, 0)
+
+[node name="LeftArmPivot" type="Node3D" parent="CameraPivot/CameraArm/Camera3D" unique_id=1004451385]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2575451, -0.38082194, -0.3384121)
+
+[node name="vcr" parent="CameraPivot/CameraArm/Camera3D/LeftArmPivot" unique_id=1647886530 instance=ExtResource("4_dqkch")]
+transform = Transform3D(-0.8454212, 0.5341002, -8.940697e-08, 0.26705, 0.42271066, 0.8660253, 0.46254435, 0.7321562, -0.49999994, 0, 0, 0)
+
+[node name="FSM" type="Node" parent="." unique_id=1093460602 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("5_smehm")
+initial_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://do013jvdsxa70"
+
+[node name="Idle" type="Node" parent="FSM" unique_id=1447956144]
+script = ExtResource("6_ur7pv")
+metadata/_custom_type_script = "uid://cn7jvis3ipdlp"
+
+[node name="Walk" type="Node" parent="FSM" unique_id=1117715980]
+script = ExtResource("7_y4r1p")
+metadata/_custom_type_script = "uid://cn7jvis3ipdlp"
+
+[node name="Sprint" type="Node" parent="FSM" unique_id=1515603300]
+script = ExtResource("8_d2wvv")
+metadata/_custom_type_script = "uid://cn7jvis3ipdlp"
+
+[node name="Label" type="Label" parent="." unique_id=1614861985 node_paths=PackedStringArray("fsm")]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "STATE: "
+script = SubResource("GDScript_smehm")
+fsm = NodePath("../FSM")
