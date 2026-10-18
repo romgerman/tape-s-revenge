@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bgdhi1k6m0uy0" path="res://src/main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://648ejmwqpayn" path="res://scenes/player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://cios643e3pjv0" path="res://scenes/enemy.tscn" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://5prah2c0f0d7" path="res://src/enemy_spawner.gd" id="4_1bvp3"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_mo3mp"]
 vertices = PackedVector3Array(-6.25, 0.25, -8.5, -5.75, 0.25, -8.5, -5.75, 0.25, -49.5, -49.5, 0.25, -49.5, -49.5, 0.25, -8.75, -4.5, 0.25, -7.25, -1, 0.25, -7.25, -1, 0.25, -8.25, -4.75, 0.25, -8.5, -0.5, 0.25, -8.5, -0.5, 0.25, -49.5, 1, 0.25, -8.5, 1.25, 0.25, -7.25, 2, 0.25, -7.25, 2.25, 0.25, -8.5, 3.75, 0.25, -49.5, 3.75, 0.25, -8.5, 4.25, 0.25, -8.25, 49.5, 0.25, -7.25, 49.5, 0.25, -49.5, 4.25, 0.25, -7.25, -6.75, 0.25, -0.25, -5.5, 0.25, -0.5, -5.5, 0.25, -1.75, -6.75, 0.25, -2, -49.5, 0.25, 2, -6.75, 0.25, -6.5, -6.75, 0.25, -8.25, -6.75, 0.25, -3.75, -5.5, 0.25, -4, -5.5, 0.25, -6.25, -6.25, 0.25, 1.75, -6.75, 0.25, 1.5, 2.25, 0.25, -6.25, 0.75, 0.25, -6.25, 4, 0.25, -6.25, -4.5, 0.25, -2, -4.5, 0.25, -0.25, -4.75, 0.25, -6.25, -4.5, 0.25, -3.75, -4.5, 0.25, 1.5, -5.5, 0.25, 1.75, -5.5, 0.25, 49.5, -0.75, 0.25, -6.25, 49.5, 0.25, 49.5, -49.5, 0.25, 49.5)
@@ -74,3 +76,10 @@ transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 1.5, 
 environment = SubResource("Environment_mo3mp")
 
 [node name="Player" parent="Level" unique_id=809582994 instance=ExtResource("1_ig7tw")]
+
+[node name="Enemy" parent="Level" unique_id=1282291528 instance=ExtResource("3_h2yge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.753335, 0, -3.8971944)
+
+[node name="EnemySpawner" type="Marker3D" parent="Level" unique_id=1844468984]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 18.5)
+script = ExtResource("4_1bvp3")

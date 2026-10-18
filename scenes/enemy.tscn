@@ -5,13 +5,19 @@
 [ext_resource type="Script" uid="uid://b2ypdksajxedb" path="res://src/fsm/enemy/idle.gd" id="3_5uy6h"]
 [ext_resource type="Script" uid="uid://c8uoe2e35vkvb" path="res://src/fsm/enemy/chase.gd" id="4_5uy6h"]
 [ext_resource type="Script" uid="uid://dga7c35omjtmx" path="res://src/fsm/enemy/death.gd" id="5_c4w8v"]
+[ext_resource type="Script" uid="uid://c80p2uwbr3csw" path="res://src/hurtbox.gd" id="6_xwavj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mo3mp"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mo3mp"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qwhg7"]
+
 [node name="Enemy" type="CharacterBody3D" unique_id=1282291528]
+collision_layer = 32
+collision_mask = 17
 script = ExtResource("1_7p1mj")
+move_speed = 2.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1901491607]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -22,6 +28,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_mo3mp")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=657755461]
+avoidance_enabled = true
+radius = 1.0
 debug_enabled = true
 
 [node name="FSM" type="Node" parent="." unique_id=1471291780 node_paths=PackedStringArray("initial_state")]
@@ -40,3 +48,15 @@ metadata/_custom_type_script = "uid://cn7jvis3ipdlp"
 [node name="Death" type="Node" parent="FSM" unique_id=292121236]
 script = ExtResource("5_c4w8v")
 metadata/_custom_type_script = "uid://cn7jvis3ipdlp"
+
+[node name="HurtBox" type="Area3D" parent="." unique_id=127006438]
+collision_layer = 512
+collision_mask = 256
+script = ExtResource("6_xwavj")
+metadata/_custom_type_script = "uid://c80p2uwbr3csw"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox" unique_id=758566002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_qwhg7")
+
+[connection signal="hit" from="HurtBox" to="." method="_on_hurt_box_hit"]

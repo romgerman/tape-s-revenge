@@ -2,6 +2,112 @@
 
 [ext_resource type="PackedScene" uid="uid://chi1xodu36cr8" path="res://assets/models/vcr.glb" id="1_vtmig"]
 [ext_resource type="Script" uid="uid://drob1jeldyrnu" path="res://src/vcr.gd" id="2_qk6ud"]
+[ext_resource type="Script" uid="uid://cq5ev1e77shjt" path="res://src/hitbox.gd" id="3_7ejvn"]
+
+[sub_resource type="Animation" id="Animation_qk6ud"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VCR/VCR_Loading_Gear:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.2831855, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VCR/VCR_Gear:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.2831855, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("VCR/VCR_Gear_001:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.2831855, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7ejvn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VCR/VCR_Loading_Gear:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VCR/VCR_Gear:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("VCR/VCR_Gear_001:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x1452"]
+_data = {
+&"Idle": SubResource("Animation_qk6ud"),
+&"RESET": SubResource("Animation_7ejvn")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mo3mp"]
 
 [node name="vcr" unique_id=1647886530 instance=ExtResource("1_vtmig")]
 script = ExtResource("2_qk6ud")
+attack_speed = 0.2
+
+[node name="VCR_Motor" parent="VCR" parent_id_path=PackedInt32Array(22835293) index="11" unique_id=2068605640]
+transform = Transform3D(1.1929593, 0.5484383, 0, -0.5484382, 1.1929595, 0, 0, 0, 1.3129876, 0.078200385, 0.0042845123, -0.052542537)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=1686358476]
+libraries/ = SubResource("AnimationLibrary_x1452")
+
+[node name="HitBox" type="Area3D" parent="." index="2" unique_id=1930940182]
+collision_layer = 256
+collision_mask = 512
+monitoring = false
+script = ExtResource("3_7ejvn")
+metadata/_custom_type_script = "uid://cq5ev1e77shjt"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" index="0" unique_id=1551399387]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.23312593)
+shape = SubResource("SphereShape3D_mo3mp")

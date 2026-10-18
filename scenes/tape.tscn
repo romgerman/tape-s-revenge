@@ -10,3 +10,8 @@ script = ExtResource("2_cgxy3")
 transform = Transform3D(0.99998736, 0.0050247507, 1.4097834e-07, -0.0050247516, 0.99998724, -3.325168e-11, -1.4097672e-07, -6.7512984e-10, 1, -3.6263373e-08, 0.2784277, 5.164832e-09)
 bone_name = "Bone.004"
 bone_idx = 4
+
+[node name="TapeEnd2" type="BoneAttachment3D" parent="Tape_Armature/Skeleton3D" parent_id_path=PackedInt32Array(92227836) index="2" unique_id=1509797199]
+transform = Transform3D(0.99995106, -0.0099008195, 1.7494466e-07, 0.009900817, 0.99995095, 4.018625e-10, -1.7494006e-07, 1.3302524e-09, 1, 0.0007076127, 0.2069569, 3.4966132e-09)
+bone_name = "Bone.003"
+bone_idx = 3

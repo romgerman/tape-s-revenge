@@ -69,6 +69,14 @@ sprint={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="Everything"
+3d_physics/layer_5="Player"
+3d_physics/layer_6="Enemy"
+3d_physics/layer_9="Hitbox"
+3d_physics/layer_10="Hurtbox"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
