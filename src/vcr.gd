@@ -4,6 +4,7 @@ extends Node3D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var hitbox: HitBox = $HitBox
+@onready var particles: GPUParticles3D = $GPUParticles3D
 
 var initial_rotation := Vector3.ZERO
 
@@ -26,6 +27,9 @@ func _physics_process(_delta: float) -> void:
 	if Time.get_ticks_msec() > attack_timer:
 		hitbox.monitoring = not hitbox.monitoring
 		attack_timer = Time.get_ticks_msec() + attack_speed * 1000.0
+	
+	if hitbox.monitoring:
+		particles.visible = hitbox.has_overlapping_areas()
 
 var is_attacking := false
 
@@ -37,3 +41,4 @@ func unattack() -> void:
 	is_attacking = false
 	hitbox.monitoring = false
 	attack_rotation = Vector3.ZERO
+	particles.visible = false

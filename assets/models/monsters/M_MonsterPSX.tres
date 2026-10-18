@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dd7pkgpu5wo85"]
+
+[ext_resource type="Texture2D" uid="uid://bggcnsfwqh42p" path="res://assets/models/monsters/MonsterPSX_Diffuse.png" id="1_l28ob"]
+
+[resource]
+resource_name = "M_MonsterPSX"
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_l28ob")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0
+texture_repeat = false

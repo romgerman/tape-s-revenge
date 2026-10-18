@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Enemy
 
 @export var move_speed: float = 3.0
 

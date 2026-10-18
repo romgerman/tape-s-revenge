@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://chi1xodu36cr8" path="res://assets/models/vcr.glb" id="1_vtmig"]
 [ext_resource type="Script" uid="uid://drob1jeldyrnu" path="res://src/vcr.gd" id="2_qk6ud"]
 [ext_resource type="Script" uid="uid://cq5ev1e77shjt" path="res://src/hitbox.gd" id="3_7ejvn"]
+[ext_resource type="PackedScene" uid="uid://h4lsro6d75fc" path="res://scenes/blood_particles.tscn" id="4_x1452"]
 
 [sub_resource type="Animation" id="Animation_qk6ud"]
 resource_name = "Idle"
@@ -106,8 +107,13 @@ collision_layer = 256
 collision_mask = 512
 monitoring = false
 script = ExtResource("3_7ejvn")
+damage = 30.0
 metadata/_custom_type_script = "uid://cq5ev1e77shjt"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" index="0" unique_id=1551399387]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.23312593)
 shape = SubResource("SphereShape3D_mo3mp")
+
+[node name="GPUParticles3D" parent="." index="3" unique_id=1998552205 instance=ExtResource("4_x1452")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.040213645, 0.28637975)
+visible = false
