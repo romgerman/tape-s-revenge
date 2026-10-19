@@ -9,12 +9,29 @@ const BloodParticlesScene := preload("res://scenes/blood_particles.tscn")
 
 @onready var right_arm_weapon: Node3D = $CameraPivot/CameraArm/Camera3D/RightArmPivot/vhs_tape
 @onready var left_arm_weapon: Node3D = $CameraPivot/CameraArm/Camera3D/LeftArmPivot/vcr
+@onready var health_bar: Range = $UI/MarginContainer/Health
+@onready var stats_label: RichTextLabel = $UI/MarginContainer/Stats/StatsLabel
 
 # Stats
 var health := EntityValue.create(100.0, 100.0)
 
 func _enter_tree() -> void:
 	GameManager.player = self
+
+func _ready() -> void:
+	health_bar.value = health.value
+	health.changed.connect(_on_health_changed)
+	_on_stats_changed()
+	GameManager.stats.changed.connect(_on_stats_changed)
+
+func _on_health_changed(value: float) -> void:
+	health_bar.value = value
+
+func _on_stats_changed() -> void:
+	stats_label.text = "Enemies killed: %s\nTime survived: %0.1fs" % [
+		GameManager.stats.enemies_killed,
+		GameManager.stats.elapsed
+	]
 
 func _physics_process(_delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
@@ -85,7 +102,11 @@ func attack_right_1() -> void:
 		var enemy_hurtbox := hit["collider"] as HurtBox
 		var dir := ray.from.direction_to(hit["position"])
 		right_arm_weapon.target_reached.connect(func ():
-			enemy_hurtbox.take_damage(Damage.raw(20.0))
+			var raw_damage := randf_range(10.0, 30.0)
+			var dmg := Damage.raw(raw_damage).set_position(hit["position"]).set_owner(self)
+			if raw_damage >= 20.0:
+				dmg.set_is_crit(true)
+			enemy_hurtbox.take_damage(dmg)
 			var blood := BloodParticlesScene.instantiate() as Node3D
 			enemy_hurtbox.add_child(blood)
 			blood.global_position = hit["position"] - dir
@@ -137,3 +158,14 @@ func attack_left(toggle: bool) -> void:
 		left_arm_weapon.attack()
 	else:
 		left_arm_weapon.unattack()
+
+func take_damage(dmg: Damage) -> void:
+	health.sub_value(dmg.value)
+	
+	if health.value <= 0.0:
+		GameManager.player_died.emit()
+		return
+
+func _on_hurt_box_hit(dmg: Damage) -> void:
+	if dmg.owner != self:
+		take_damage(dmg)

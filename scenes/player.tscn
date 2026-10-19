@@ -9,17 +9,31 @@
 [ext_resource type="Script" uid="uid://b1wtv3jxxcgl" path="res://src/fsm/player/walk.gd" id="7_y4r1p"]
 [ext_resource type="Script" uid="uid://58acew36e4pl" path="res://src/fsm/player/sprint.gd" id="8_d2wvv"]
 [ext_resource type="Script" uid="uid://bh6nitl4xw0la" path="res://src/reticle.gd" id="9_ur7pv"]
+[ext_resource type="Script" uid="uid://c80p2uwbr3csw" path="res://src/hurtbox.gd" id="10_y4r1p"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mo3mp"]
 
-[sub_resource type="GDScript" id="GDScript_smehm"]
-script/source = "extends Label
+[sub_resource type="Gradient" id="Gradient_y4r1p"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
 
-@export var fsm: FSM
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mo3mp"]
+gradient = SubResource("Gradient_y4r1p")
+width = 256
+height = 32
 
-func _physics_process(delta: float) -> void:
-	text = fsm.get_current_state_name()
-"
+[sub_resource type="Gradient" id="Gradient_d2wvv"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 1, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3v2ag"]
+gradient = SubResource("Gradient_d2wvv")
+width = 256
+height = 32
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qwhg7"]
 
 [node name="Player" type="CharacterBody3D" unique_id=809582994]
 collision_layer = 16
@@ -53,8 +67,9 @@ transform = Transform3D(-0.86602545, 0.46277216, -0.18931961, 0, -0.37863922, -0
 [node name="LeftArmPivot" type="Node3D" parent="CameraPivot/CameraArm/Camera3D" unique_id=1004451385]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25539526, 0.04528582, -0.49191603)
 
-[node name="vcr" parent="CameraPivot/CameraArm/Camera3D/LeftArmPivot" unique_id=1647886530 instance=ExtResource("4_dqkch")]
+[node name="vcr" parent="CameraPivot/CameraArm/Camera3D/LeftArmPivot" unique_id=1647886530 node_paths=PackedStringArray("entity_owner") instance=ExtResource("4_dqkch")]
 transform = Transform3D(0.8166141, 0.5341002, 0.21881127, -0.033806533, 0.42271066, -0.9056338, -0.5761931, 0.7321562, 0.36324757, 0, 0, 0)
+entity_owner = NodePath("../../../../..")
 
 [node name="FSM" type="Node" parent="." unique_id=1093460602 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("5_smehm")
@@ -73,20 +88,60 @@ metadata/_custom_type_script = "uid://cn7jvis3ipdlp"
 script = ExtResource("8_d2wvv")
 metadata/_custom_type_script = "uid://cn7jvis3ipdlp"
 
-[node name="Label" type="Label" parent="." unique_id=1614861985 node_paths=PackedStringArray("fsm")]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "STATE: "
-script = SubResource("GDScript_smehm")
-fsm = NodePath("../FSM")
+[node name="UI" type="CanvasLayer" parent="." unique_id=1022539039]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1022539039]
-
-[node name="Reticle" type="Control" parent="CanvasLayer" unique_id=392277072]
+[node name="Reticle" type="Control" parent="UI" unique_id=392277072]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("9_ur7pv")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=1637690359]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Health" type="TextureProgressBar" parent="UI/MarginContainer" unique_id=23744932]
+layout_mode = 2
+step = 0.01
+value = 50.0
+texture_under = SubResource("GradientTexture2D_mo3mp")
+texture_progress = SubResource("GradientTexture2D_3v2ag")
+
+[node name="Stats" type="Control" parent="UI/MarginContainer" unique_id=411209757]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="StatsLabel" type="RichTextLabel" parent="UI/MarginContainer/Stats" unique_id=1026450491]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -246.0
+offset_bottom = 46.0
+grow_horizontal = 0
+fit_content = true
+
+[node name="HurtBox" type="Area3D" parent="." unique_id=1651005572]
+collision_layer = 512
+collision_mask = 256
+script = ExtResource("10_y4r1p")
+metadata/_custom_type_script = "uid://c80p2uwbr3csw"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox" unique_id=803401088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_qwhg7")
+
+[connection signal="hit" from="HurtBox" to="." method="_on_hurt_box_hit"]

@@ -5,7 +5,10 @@
 [ext_resource type="Script" uid="uid://b2ypdksajxedb" path="res://src/fsm/enemy/idle.gd" id="3_5uy6h"]
 [ext_resource type="Script" uid="uid://c8uoe2e35vkvb" path="res://src/fsm/enemy/chase.gd" id="4_5uy6h"]
 [ext_resource type="Script" uid="uid://dga7c35omjtmx" path="res://src/fsm/enemy/death.gd" id="5_c4w8v"]
+[ext_resource type="Script" uid="uid://dx0k46hriv8j0" path="res://src/fsm/enemy/attack.gd" id="5_md484"]
 [ext_resource type="Script" uid="uid://c80p2uwbr3csw" path="res://src/hurtbox.gd" id="6_xwavj"]
+[ext_resource type="PackedScene" uid="uid://7liy4thpp6n7" path="res://scenes/monster_psx.tscn" id="7_nenq2"]
+[ext_resource type="Script" uid="uid://cq5ev1e77shjt" path="res://src/hitbox.gd" id="9_ipns3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mo3mp"]
 
@@ -13,7 +16,9 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qwhg7"]
 
-[node name="Enemy" type="CharacterBody3D" unique_id=1282291528]
+[sub_resource type="SphereShape3D" id="SphereShape3D_mo3mp"]
+
+[node name="Enemy" type="CharacterBody3D" unique_id=1282291528 groups=["entity:enemy"]]
 collision_layer = 32
 collision_mask = 17
 script = ExtResource("1_7p1mj")
@@ -25,11 +30,15 @@ shape = SubResource("CapsuleShape3D_mo3mp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1878706603]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 mesh = SubResource("CapsuleMesh_mo3mp")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=657755461]
 avoidance_enabled = true
 radius = 1.0
+
+[node name="MonsterPSX" parent="." unique_id=1577899169 instance=ExtResource("7_nenq2")]
+transform = Transform3D(-1.3, 0, -1.9629454e-07, 0, 1.3, 0, 1.9629454e-07, 0, -1.3, -5.5217185e-08, 0, -0.33243936)
 
 [node name="FSM" type="Node" parent="." unique_id=1471291780 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_4ra3w")
@@ -40,8 +49,15 @@ metadata/_custom_type_script = "uid://do013jvdsxa70"
 script = ExtResource("3_5uy6h")
 metadata/_custom_type_script = "uid://cn7jvis3ipdlp"
 
-[node name="Chase" type="Node" parent="FSM" unique_id=727000407]
+[node name="Chase" type="Node" parent="FSM" unique_id=727000407 node_paths=PackedStringArray("visual")]
 script = ExtResource("4_5uy6h")
+visual = NodePath("../../MonsterPSX")
+metadata/_custom_type_script = "uid://cn7jvis3ipdlp"
+
+[node name="Attack" type="Node" parent="FSM" unique_id=502560484 node_paths=PackedStringArray("visual", "hitbox")]
+script = ExtResource("5_md484")
+visual = NodePath("../../MonsterPSX")
+hitbox = NodePath("../../HitBox")
 metadata/_custom_type_script = "uid://cn7jvis3ipdlp"
 
 [node name="Death" type="Node" parent="FSM" unique_id=292121236]
@@ -57,5 +73,18 @@ metadata/_custom_type_script = "uid://c80p2uwbr3csw"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox" unique_id=758566002]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_qwhg7")
+
+[node name="HitBox" type="Area3D" parent="." unique_id=2005270353 node_paths=PackedStringArray("entity_owner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4940683, -0.59306884)
+collision_layer = 256
+collision_mask = 512
+monitoring = false
+script = ExtResource("9_ipns3")
+damage = 20.0
+entity_owner = NodePath("..")
+metadata/_custom_type_script = "uid://cq5ev1e77shjt"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox" unique_id=569312185]
+shape = SubResource("SphereShape3D_mo3mp")
 
 [connection signal="hit" from="HurtBox" to="." method="_on_hurt_box_hit"]

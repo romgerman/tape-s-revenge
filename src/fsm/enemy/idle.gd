@@ -1,4 +1,4 @@
 extends FSMState
 
 func enter() -> void:
-	pass
+	fsm.change_state_to(^"Chase")

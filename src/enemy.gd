@@ -2,6 +2,7 @@ extends CharacterBody3D
 class_name Enemy
 
 @export var move_speed: float = 3.0
+@export_range(0.0, 360, 0.01, "radians_as_degrees", "suffix:deg/s") var angular_speed: float = PI * 0.5
 
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
 
@@ -12,12 +13,6 @@ var target_position: Vector3 = Vector3.ZERO
 var health := EntityValue.create(100.0, 100.0)
 
 func _ready() -> void:
-	var tw := create_tween().set_loops()
-	tw.tween_callback(func ():
-		if GameManager.player:
-			set_target_position(GameManager.player.global_position)
-	).set_delay(0.5)
-	
 	navigation_agent.velocity_computed.connect(_on_velocity_computed)
 
 func _physics_process(delta: float) -> void:
@@ -66,6 +61,18 @@ func set_target_position(target: Vector3) -> void:
 	navigation_agent.target_position = target
 	navigation_was_complete = false
 
+func turn_towards(target_pos: Vector3, delta: float) -> void:
+	var target_pos_flat := Vector3(target_pos.x, global_position.y, target_pos.z)
+	
+	if global_position.is_equal_approx(target_pos_flat):
+		return
+	
+	if target_pos_flat.cross(Vector3.UP).length_squared() <= 0.00001:
+		return
+	
+	var target_transform := global_transform.looking_at(target_pos_flat, Vector3.UP)
+	global_transform.basis = global_transform.basis.slerp(target_transform.basis, delta * angular_speed).orthonormalized()
+
 var damage_tw: Tween
 
 func take_damage(dmg: Damage) -> void:
@@ -77,9 +84,32 @@ func take_damage(dmg: Damage) -> void:
 	
 	health.sub_value(dmg.value)
 	
+	if dmg.position != Vector3.ZERO:
+		GameManager.show_damage_number(
+			dmg.value,
+			get_viewport().get_camera_3d().unproject_position(dmg.position),
+			dmg.is_crit
+		)
+	else:
+		GameManager.show_damage_number(
+			dmg.value,
+			get_viewport().get_camera_3d().unproject_position(get_parent_node_3d().global_position),
+			dmg.is_crit
+		)
+	
 	if health.value <= 0.0:
+		GameManager.stats.enemies_killed += 1
 		queue_free()
 		return
+	
+	var player := AudioStreamPlayer3D.new()
+	player.stream = load("res://assets/sounds/195952__minian89__swing_blood_splatter.mp3")
+	add_child(player)
+	player.play()
+	player.finished.connect(func ():
+		player.pitch_scale = randf_range(0.9, 1.1)
+		player.queue_free()
+	)
 	
 	if damage_tw:
 		damage_tw.kill()
@@ -91,4 +121,5 @@ func take_damage(dmg: Damage) -> void:
 # Handlers
 
 func _on_hurt_box_hit(dmg: Damage) -> void:
-	take_damage(dmg)
+	if dmg.owner != self:
+		take_damage(dmg)

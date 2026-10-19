@@ -2,5 +2,12 @@
 
 [ext_resource type="Script" uid="uid://duqdr36v6r7c1" path="res://scenes/game_manager.gd" id="1_hwd4i"]
 
-[node name="GameManager" type="Node3D" unique_id=1488662435]
+[sub_resource type="LabelSettings" id="LabelSettings_hwd4i"]
+font_size = 24
+
+[node name="GameManager" type="Node3D" unique_id=1488662435 node_paths=PackedStringArray("damage_numbers")]
 script = ExtResource("1_hwd4i")
+damage_numbers = NodePath("DamageNumbers")
+label_settings = SubResource("LabelSettings_hwd4i")
+
+[node name="DamageNumbers" type="CanvasLayer" parent="." unique_id=311517462]

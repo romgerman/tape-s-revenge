@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ddvht1umx42nt"
+path="res://.godot/imported/not dscan 2026-10-18 1804.ogg-42bda029dfc41a2c7642ffaaa7cfd9df.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/music/not dscan 2026-10-18 1804.ogg"
+dest_files=["res://.godot/imported/not dscan 2026-10-18 1804.ogg-42bda029dfc41a2c7642ffaaa7cfd9df.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

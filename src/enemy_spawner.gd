@@ -1,7 +1,7 @@
 extends Marker3D
 
-@export var delay: float = 3.0
-@export var max_enemies: int = 20
+@export var delay: float = 5.0
+@export var max_enemies: int = 12
 
 const EnemyScene := preload("res://scenes/enemy.tscn")
 

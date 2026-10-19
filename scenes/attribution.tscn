@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b7fxs1or22awy"]
+
+[node name="Attribution" type="Control" unique_id=1283821771]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1904373519]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Tape Recorder.wav by Pogotron -- https://freesound.org/s/61075/ -- License: Sampling+
+Building pack models by Pasha -- https://sketchfab.com/3d-models/building-pack-ecec5070c3564d429062f346355634c7
+Packing tape pull.wav by Michaelvelo -- https://freesound.org/s/366836/ -- License: Attribution NonCommercial 3.0
+The Wrapped model by Codyanka -- https://codyanka.itch.io/the-wrapped"
